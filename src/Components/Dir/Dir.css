@@ -1,0 +1,15 @@
+.dir {
+  padding-left: 4px;
+  display: flex;
+}
+
+.dir:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.dir-icon {
+  padding-right: 3px;
+}
