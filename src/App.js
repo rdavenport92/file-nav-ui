@@ -39,7 +39,7 @@ export default class App extends Component {
   };
 
   openFile = file => {
-    let fullPath = this.state.dir + "\\" + file;
+    let fullPath = this.state.dir.join("") + file;
     ipcRenderer.send("open-file", fullPath);
   };
 
@@ -52,10 +52,8 @@ export default class App extends Component {
   };
 
   render() {
-    console.log(this.state.dir);
-    return this.state.err ? (
-      <div className="display-err">{this.state.err}</div>
-    ) : (
+    console.log(this.state.err);
+    return (
       <div className="app-container">
         <div className="controls-window-container">
           <Toolbar goBack={this.goBack} dir={this.state.dir} />
