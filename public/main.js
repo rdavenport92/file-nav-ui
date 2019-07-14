@@ -1,4 +1,5 @@
 const electron = require("electron");
+const { dialog } = electron;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
@@ -42,7 +43,10 @@ ipc.on("get-dirs", (e, dirArray) => {
   let dir = dirArray.join("");
   fs.readdir(dir, (err, files) => {
     if (err) {
-      mainWindow.send("err", "Unable to access folder");
+      dialog.showErrorBox({
+        title: "Error!",
+        content: "Unable to access the selected folder"
+      });
     } else {
       let formattedFiles = files
         .map(file => {
@@ -62,9 +66,14 @@ ipc.on("get-dirs", (e, dirArray) => {
 });
 
 ipc.on("open-file", (e, file) => {
-  child_process.exec(file, (err, data) => {
+  child_process.exec(`"${file}"`, (err, data) => {
     if (err) {
-      mainWindow.send("err", "Unable to open file");
+      console.log(err);
+      dialog.showMessageBox({
+        title: "Error",
+        message: "The selected file can not be opened",
+        type: "error"
+      });
     }
   });
 });

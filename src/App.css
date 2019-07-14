@@ -8,18 +8,24 @@
   font-size: 1.2em;
 }
 
-.main-container {
+.app-container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 }
 
 .controls-window-container {
+  flex: 1;
   background-color: rgba(128, 128, 128, 0.219);
   border-bottom: 1px solid black;
   padding: 2px;
+  max-height: 28px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
 }
 
 .nav-window-container {
-  margin-top: 10px;
-  margin-left: 5px;
+  overflow-y: scroll;
 }

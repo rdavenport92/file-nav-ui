@@ -1,12 +1,13 @@
-.dir {
+.dir-container {
   padding-left: 4px;
   display: flex;
 }
 
 .dir:hover {
+  transform-origin: left;
+  transition: 0.05s ease-in-out;
   transform: scale(1.05);
   cursor: pointer;
-  margin-left: 20px;
   font-weight: bold;
 }
 

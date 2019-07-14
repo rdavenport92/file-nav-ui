@@ -10,32 +10,30 @@ export default class App extends Component {
     super(props);
     this.state = {
       dir: [],
-      err: null,
       dirs: []
     };
   }
 
   componentDidMount() {
     this.navigate("C:\\");
-    ipcRenderer.on("err", (e, err) => {
-      this.setState({
-        err
-      });
-    });
     ipcRenderer.on("new-dir", (e, dirs) => {
       this.setState({
-        err: null,
-        dirs
+        dirs,
+        loading: false
       });
     });
   }
 
+  jumpTo = dir => {
+    this.setState({ dir, loading: true }, () => {
+      ipcRenderer.send("get-dirs", this.state.dir);
+    });
+  };
+
   navigate = dir => {
     let newDir = [...this.state.dir];
     newDir.push(dir + "\\");
-    this.setState({ dir: newDir }, () => {
-      ipcRenderer.send("get-dirs", this.state.dir);
-    });
+    this.jumpTo(newDir);
   };
 
   openFile = file => {
@@ -52,20 +50,25 @@ export default class App extends Component {
   };
 
   render() {
-    console.log(this.state.err);
     return (
       <div className="app-container">
         <div className="controls-window-container">
-          <Toolbar goBack={this.goBack} dir={this.state.dir} />
+          <Toolbar
+            goBack={this.goBack}
+            dir={this.state.dir}
+            jumpTo={this.jumpTo}
+          />
         </div>
         <div className="nav-window-container">
-          {this.state.dirs.map(dir =>
-            dir.type === "Dir" ? (
-              <Folder navigate={this.navigate} dir={dir.name} />
-            ) : (
-              <File openFile={this.openFile} file={dir.name} />
-            )
-          )}
+          <div className="nav-window">
+            {this.state.dirs.map(dir =>
+              dir.type === "Dir" ? (
+                <Folder navigate={this.navigate} dir={dir.name} />
+              ) : (
+                <File openFile={this.openFile} file={dir.name} />
+              )
+            )}
+          </div>
         </div>
       </div>
     );

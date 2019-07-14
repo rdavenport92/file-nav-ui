@@ -5,22 +5,38 @@
 .back-btn-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 24px;
 }
 
-.back-btn:hover {
+.back-btn-container:hover {
   cursor: pointer;
 }
 
 .disable {
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .nav-bar {
   display: flex;
   align-items: center;
   border-left: 1px solid rgb(131, 131, 131);
-  margin-left: 4px;
+
   padding-left: 4px;
   height: 90%;
+}
+
+.dir-selectable {
+  background-color: rgba(255, 255, 255, 0.938);
+  padding: 0px 3px;
+  height: 100%;
+  border-radius: 2px;
+  border-right: 1px solid rgba(128, 128, 128, 0.205);
   font-weight: bold;
+}
+
+.dir-selectable:hover {
+  cursor: pointer;
+  background-color: rgb(6, 71, 71);
+  color: white;
 }
