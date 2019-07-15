@@ -15,7 +15,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.navigate("C:\\");
+    this.navigate("C:");
     ipcRenderer.on("new-dir", (e, dirs) => {
       this.setState({
         dirs,
@@ -60,17 +60,29 @@ export default class App extends Component {
           />
         </div>
         <div className="nav-window-container">
-          <div className="nav-window">
-            {this.state.dirs.map(dir =>
-              dir.type === "Dir" ? (
-                <Folder navigate={this.navigate} dir={dir.name} />
-              ) : (
-                <File openFile={this.openFile} file={dir.name} />
-              )
-            )}
-          </div>
+          {this.state.loading ? (
+            <LoadingWheel />
+          ) : (
+            <div className="nav-window">
+              {this.state.dirs.map(dir =>
+                dir.type === "Dir" ? (
+                  <Folder navigate={this.navigate} dir={dir.name} />
+                ) : (
+                  <File openFile={this.openFile} file={dir.name} />
+                )
+              )}
+            </div>
+          )}
         </div>
       </div>
     );
   }
 }
+
+const LoadingWheel = () => {
+  return (
+    <div className="loading-wheel-container">
+      <div className="loading-wheel" />
+    </div>
+  );
+};
