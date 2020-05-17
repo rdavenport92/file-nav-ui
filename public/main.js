@@ -56,10 +56,10 @@ ipc.on("get-dirs", (e, dirArray) => {
               type: fs.lstatSync(dir + file).isDirectory() ? "Dir" : "File"
             };
           } catch (e) {
-            return;
+            return { name: file, type: "Unknown" };
           }
         })
-        .filter(file => file);
+        .filter(file => !!file);
       mainWindow.send("new-dir", formattedFiles);
     }
   });

@@ -3,7 +3,7 @@ import "./ToolBar.css";
 const backIcon = require("../../assets/backIcon.png");
 
 const Toolbar = ({ goBack, dir, jumpTo }) => {
-  const selectDir = index => {
+  const selectDir = (index) => {
     let tempDir = [...dir];
     tempDir.splice(index + 1);
     jumpTo(tempDir);
@@ -15,13 +15,18 @@ const Toolbar = ({ goBack, dir, jumpTo }) => {
       <div className="back-btn-container">
         <img
           src={backIcon}
+          alt="back-icon"
           onClick={!topLevel ? goBack : null}
           className={"back-btn" + (!topLevel ? "" : " disable")}
         />{" "}
       </div>
       <div className="nav-bar">
         {dir.map((d, index) => (
-          <DirSelectable selectDir={() => selectDir(index)} dir={d} />
+          <DirSelectable
+            key={`entry-${index + 1}`}
+            selectDir={() => selectDir(index)}
+            dir={d}
+          />
         ))}
       </div>
     </div>

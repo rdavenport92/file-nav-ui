@@ -11,7 +11,7 @@ const Folder = ({ navigate, dir }) => {
           navigate(dir);
         }}
       >
-        <img src={folderIcon} className="dir-icon" />
+        <img src={folderIcon} className="dir-icon" alt="folder-icon" />
         {`${dir}`}
       </div>
     </div>

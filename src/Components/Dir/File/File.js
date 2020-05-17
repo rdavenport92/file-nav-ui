@@ -11,7 +11,7 @@ const File = ({ openFile, file }) => {
           openFile(file);
         }}
       >
-        <img src={fileIcon} className="dir-icon" />
+        <img src={fileIcon} className="dir-icon" alt="file-icon" />
         {`${file}`}
       </div>
     </div>
