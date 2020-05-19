@@ -26,10 +26,7 @@ function createWindow() {
   mainWindow.setMenu(null);
 }
 
-app.on("ready", () => {
-  createWindow();
-  //Menu.setApplicationMenu(Menu.buildFromTemplate([]));
-});
+app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
