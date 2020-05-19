@@ -1,5 +1,5 @@
 const electron = require("electron");
-const { dialog } = electron;
+const { dialog, Menu } = electron;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
@@ -23,9 +23,13 @@ function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
   mainWindow.on("closed", () => (mainWindow = null));
+  mainWindow.setMenu(null);
 }
 
-app.on("ready", createWindow);
+app.on("ready", () => {
+  createWindow();
+  //Menu.setApplicationMenu(Menu.buildFromTemplate([]));
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
