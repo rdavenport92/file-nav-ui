@@ -37,17 +37,25 @@ const LoadingWheel = () => {
   );
 };
 
+const setDirState = (dirs, setDirs, setLoading) => {
+  setDirs(dirs);
+  setLoading(false);
+};
+
+const newDirsEventHandler = (dirs, setDirs, setLoading) =>
+  setDirState(dirs, setDirs, setLoading);
+
 const App = () => {
   const [dirState, setDir] = useState([]);
   const [dirsState, setDirs] = useState([]);
   const [loadingState, setLoading] = useState(true);
 
   useEffect(() => {
-    ipcRenderer.on("new-dir", (_e, dirs) => {
-      setDirs(dirs);
-      setLoading(false);
-    });
+    ipcRenderer.on("new-dir", (_e, dirs) =>
+      newDirsEventHandler(dirs, setDirs, setLoading)
+    );
     navigate("C:", [], setDir, setLoading);
+    return ipcRenderer.removeListener("new-dir", newDirsEventHandler);
   }, []);
 
   return (
@@ -56,7 +64,7 @@ const App = () => {
         <Toolbar
           goBack={() => goBack(dirState, setDir)}
           dir={dirState}
-          jumpTo={(dir) => jumpTo(dir, setDir, setLoading)}
+          jumpTo={dir => jumpTo(dir, setDir, setLoading)}
         />
       </div>
       <div className="nav-window-container">
@@ -68,7 +76,7 @@ const App = () => {
               dir.type === "Dir" ? (
                 <Folder
                   key={`dir-${index + 1}`}
-                  navigate={(dirToNavigateTo) =>
+                  navigate={dirToNavigateTo =>
                     navigate(dirToNavigateTo, dirState, setDir, setLoading)
                   }
                   dir={dir.name}
@@ -76,7 +84,7 @@ const App = () => {
               ) : (
                 <File
                   key={`file-${index + 1}`}
-                  openFile={(file) => openFile(file, dirState)}
+                  openFile={file => openFile(file, dirState)}
                   file={dir.name}
                 />
               )
